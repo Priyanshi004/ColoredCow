@@ -21,12 +21,6 @@ import JobList from './pages/JobList'
 import JobDetail from './pages/JobDetail'
 import ManageJobs from './pages/ManageJobs'
 
-function PrivateRoute({ children }) {
-  const auth = useSelector((state) => state.auth)
-  const token = auth?.token
-  return token ? children : <Navigate to="/login" />
-}
-
 export default function App() {
   return (
     <BrowserRouter>
@@ -45,11 +39,11 @@ export default function App() {
 
             {/* Admin/HR Portal */}
             <Route path="/login" element={<Login />} />
-            <Route path="/dashboard" element={<PrivateRoute><Layout><Dashboard /></Layout></PrivateRoute>} />
-            <Route path="/applications" element={<PrivateRoute><Layout><Applications /></Layout></PrivateRoute>} />
-            <Route path="/applications/:id" element={<PrivateRoute><Layout><ApplicationDetail /></Layout></PrivateRoute>} />
-            <Route path="/reports" element={<PrivateRoute><Layout><Reports /></Layout></PrivateRoute>} />
-            <Route path="/jobs-manage" element={<PrivateRoute><Layout><ManageJobs /></Layout></PrivateRoute>} />
+            <Route path="/dashboard" element={<Layout><Dashboard /></Layout>} />
+            <Route path="/applications" element={<Layout><Applications /></Layout>} />
+            <Route path="/applications/:id" element={<Layout><ApplicationDetail /></Layout>} />
+            <Route path="/reports" element={<Layout><Reports /></Layout>} />
+            <Route path="/jobs-manage" element={<Layout><ManageJobs /></Layout>} />
           </Routes>
         </ToastProvider>
       </ThemeProvider>

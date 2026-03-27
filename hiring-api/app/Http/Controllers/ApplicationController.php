@@ -88,7 +88,7 @@ class ApplicationController extends Controller
         ]);
 
         $application->load('jobOpening');
-        // Mail::to($application->email)->send(new ApplicationReceivedMail($application));
+        Mail::to($application->email)->send(new ApplicationReceivedMail($application));
 
         return response()->json(['message' => 'Application submitted successfully'], 201);
     }
@@ -130,15 +130,15 @@ class ApplicationController extends Controller
 
         $application->update(['status' => $data['status']]);
 
-        // try {
-        //     if ($data['status'] === 'approved') {
-        //         Mail::to($application->email)->send(new ApplicationApprovedMail($application));
-        //     } elseif ($data['status'] === 'rejected') {
-        //         Mail::to($application->email)->send(new ApplicationRejectedMail($application));
-        //     }
-        // } catch (\Exception $e) {
-        //     \Log::error("Mail failed: " . $e->getMessage());
-        // }
+        try {
+            if ($data['status'] === 'approved') {
+                Mail::to($application->email)->send(new ApplicationApprovedMail($application));
+            } elseif ($data['status'] === 'rejected') {
+                Mail::to($application->email)->send(new ApplicationRejectedMail($application));
+            }
+        } catch (\Exception $e) {
+            \Log::error("Mail failed: " . $e->getMessage());
+        }
 
         return response()->json(['message' => 'Application updated successfully', 'application' => $application]);
     }

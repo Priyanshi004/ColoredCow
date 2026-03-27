@@ -44,7 +44,7 @@ export default function PortalSelection() {
         </div>
 
         {/* HR Suite */}
-        <div className="glass hover-glow animate-fade-in" onClick={() => navigate('/login')} style={{ 
+        <div className="glass hover-glow animate-fade-in" onClick={() => navigate('/dashboard')} style={{ 
           padding: '48px 40px', borderRadius: '32px', cursor: 'pointer', textAlign: 'center'
         }}>
           <div style={{ 
@@ -58,8 +58,9 @@ export default function PortalSelection() {
           <div style={{ 
             display: 'inline-flex', alignItems: 'center', gap: '8px', 
             background: 'var(--accent)', color: 'white', padding: '12px 24px', borderRadius: '14px', fontWeight: '700' 
-          }}>Admin Login →</div>
+          }}>Open Dashboard →</div>
         </div>
+
       </div>
     </div>
   )
