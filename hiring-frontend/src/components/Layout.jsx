@@ -1,7 +1,9 @@
+import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, NavLink } from 'react-router-dom'
 import { logout } from '../store/authSlice'
 import api from '../api/axios'
+import ThemeToggle from './ThemeToggle'
 
 const navItems = [
   { to: '/dashboard', label: 'Dashboard', icon: '󰕒' },
@@ -10,7 +12,10 @@ const navItems = [
   { to: '/reports', label: 'Reports', icon: '󰦕' },
 ]
 
+import GlobalFooter from './GlobalFooter'
+
 export default function Layout({ children }) {
+  const [isCollapsed, setIsCollapsed] = React.useState(false)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const user = useSelector((state) => state.auth?.user) || {}
@@ -30,48 +35,69 @@ export default function Layout({ children }) {
 
       {/* Sidebar */}
       <aside className="glass" style={{
-        width: '280px', minHeight: '100vh', zIndex: 20,
+        width: isCollapsed ? '88px' : '280px', minHeight: '100vh', zIndex: 20,
         display: 'flex', flexDirection: 'column', flexShrink: 0,
-        background: 'rgba(10, 10, 20, 0.4)',
+        background: 'var(--sidebar-bg)',
         backdropFilter: 'blur(20px) saturate(160%)',
-        borderRight: '1px solid rgba(255, 255, 255, 0.08)',
+        borderRight: '1px solid var(--sidebar-border)',
+        transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
       }}>
         {/* Logo Section */}
-        <div style={{ padding: '40px 28px 32px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+        <div style={{ padding: '32px 24px 24px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '16px', justifyContent: isCollapsed ? 'center' : 'flex-start' }}>
             <div style={{
               width: '42px', height: '42px', borderRadius: '12px',
               background: 'linear-gradient(135deg, var(--accent), #a78bfa)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               fontSize: '22px', fontWeight: '900', color: 'white',
-              boxShadow: '0 8px 16px rgba(139, 92, 246, 0.4)',
-              textShadow: '0 2px 4px rgba(0,0,0,0.2)',
+              boxShadow: '0 8px 16px rgba(139, 92, 246, 0.3)',
+              flexShrink: 0,
             }}>C</div>
-            <div>
-              <div style={{ fontWeight: '800', fontSize: '18px', color: 'white', letterSpacing: '-0.8px', lineHeight: 1.1 }}>ColoredCow</div>
-              <div style={{ fontSize: '11px', color: 'var(--accent)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px', marginTop: '4px' }}>Hiring Suite</div>
-            </div>
+            {!isCollapsed && (
+              <div className="animate-fade-in" style={{ overflow: 'hidden' }}>
+                <div style={{ fontWeight: '800', fontSize: '18px', color: 'var(--sidebar-text)', letterSpacing: '-0.8px', lineHeight: 1.1, whiteSpace: 'nowrap' }}>ColoredCow</div>
+                <div style={{ fontSize: '11px', color: 'var(--accent)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px', marginTop: '4px', whiteSpace: 'nowrap' }}>Hiring Suite</div>
+              </div>
+            )}
+          </div>
+          <div style={{ marginTop: '24px', display: 'flex', justifyContent: isCollapsed ? 'center' : 'space-between', alignItems: 'center', gap: '12px' }}>
+            <ThemeToggle />
+            {!isCollapsed && (
+              <button 
+                onClick={() => setIsCollapsed(true)}
+                style={{ background: 'none', border: 'none', color: 'var(--muted)', cursor: 'pointer', fontSize: '20px', padding: '4px' }}
+                title="Collapse Sidebar"
+              >󰅖</button>
+            )}
+            {isCollapsed && (
+              <button 
+                onClick={() => setIsCollapsed(false)}
+                style={{ background: 'none', border: 'none', color: 'var(--muted)', cursor: 'pointer', fontSize: '20px', marginTop: '12px' }}
+                title="Expand Sidebar"
+              >󰍜</button>
+            )}
           </div>
         </div>
 
         {/* Navigation */}
         <nav style={{ padding: '24px 16px', flex: 1 }}>
-          <div style={{ paddingLeft: '16px', marginBottom: '16px', fontSize: '11px', fontWeight: '800', color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase', letterSpacing: '2px' }}>Main Menu</div>
+          {!isCollapsed && <div className="animate-fade-in" style={{ paddingLeft: '16px', marginBottom: '16px', fontSize: '11px', fontWeight: '800', color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '2px' }}>Main Menu</div>}
           {navItems.map(({ to, label, icon }) => (
             <NavLink key={to} to={to} style={({ isActive }) => ({
-              display: 'flex', alignItems: 'center', gap: '16px',
-              padding: '14px 20px', borderRadius: '16px', marginBottom: '8px',
+              display: 'flex', alignItems: 'center', gap: isCollapsed ? '0' : '16px',
+              justifyContent: isCollapsed ? 'center' : 'flex-start',
+              padding: '14px', borderRadius: '16px', marginBottom: '8px',
               textDecoration: 'none', fontSize: '15px', fontWeight: '600',
               transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
               background: isActive ? 'rgba(139, 92, 246, 0.15)' : 'transparent',
-              color: isActive ? 'white' : 'var(--muted)',
+              color: isActive ? 'var(--accent)' : 'var(--muted)',
               border: isActive ? '1px solid rgba(139, 92, 246, 0.2)' : '1px solid transparent',
               boxShadow: isActive ? '0 10px 20px -10px rgba(139, 92, 246, 0.3)' : 'none',
             })}>
               {({ isActive }) => (
                 <>
-                  <span style={{ fontSize: '20px', opacity: isActive ? 1 : 0.6, transform: isActive ? 'scale(1.1)' : 'none' }}>{icon}</span>
-                  <span style={{ letterSpacing: isActive ? '0.2px' : '0' }}>{label}</span>
+                   <span style={{ fontSize: '20px', opacity: isActive ? 1 : 0.6, transform: isActive ? 'scale(1.1)' : 'none' }}>{icon}</span>
+                  {!isCollapsed && <span className="animate-fade-in" style={{ letterSpacing: isActive ? '0.2px' : '0', whiteSpace: 'nowrap' }}>{label}</span>}
                 </>
               )}
             </NavLink>
@@ -79,39 +105,56 @@ export default function Layout({ children }) {
         </nav>
 
         {/* User Footer */}
-        <div style={{ padding: '24px 16px', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+        <div style={{ padding: '24px 16px', borderTop: '1px solid var(--sidebar-border)' }}>
           <div style={{
             display: 'flex', alignItems: 'center', gap: '14px',
-            padding: '16px', borderRadius: '20px', background: 'rgba(255,255,255,0.03)',
-            border: '1px solid rgba(255,255,255,0.05)',
+            justifyContent: isCollapsed ? 'center' : 'flex-start',
+            padding: '12px', borderRadius: '20px', background: 'rgba(124, 114, 255, 0.05)',
+            border: '1px solid var(--sidebar-border)',
           }}>
             <div style={{
               width: '40px', height: '40px', borderRadius: '12px',
               background: 'linear-gradient(135deg, #10b981, #34d399)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               fontSize: '16px', fontWeight: '800', color: 'white', flexShrink: 0,
-              boxShadow: '0 4px 12px rgba(16, 185, 129, 0.3)',
+              boxShadow: '0 4px 12px rgba(16, 185, 129, 0.2)',
             }}>{user?.name ? user.name[0].toUpperCase() : 'A'}</div>
-            <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ fontSize: '14px', fontWeight: '700', color: 'white', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{user?.name || 'Recruiter'}</div>
-              <div style={{ fontSize: '11px', color: 'var(--accent2)', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--accent2)', boxShadow: '0 0 10px var(--accent2)' }}></span>
-                Online
+            {!isCollapsed && (
+              <div className="animate-fade-in" style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ fontSize: '14px', fontWeight: '700', color: 'var(--sidebar-text)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{user?.name || 'Recruiter'}</div>
+                <div style={{ fontSize: '11px', color: 'var(--accent2)', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--accent2)', boxShadow: '0 0 10px var(--accent2)' }}></span>
+                  Online
+                </div>
               </div>
-            </div>
-            <button onClick={handleLogout} className="hover-glow" style={{
-              background: 'rgba(239, 68, 68, 0.1)', border: 'none', cursor: 'pointer',
-              color: 'var(--danger)', fontSize: '18px', padding: '8px', borderRadius: '10px',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              transition: 'all 0.2s',
-            }}>󰗽</button>
+            )}
+            {!isCollapsed && (
+              <button onClick={handleLogout} className="hover-glow" style={{
+                background: 'rgba(239, 68, 68, 0.1)', border: 'none', cursor: 'pointer',
+                color: 'var(--danger)', fontSize: '18px', padding: '8px', borderRadius: '10px',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                transition: 'all 0.2s',
+              }}>󰗽</button>
+            )}
           </div>
+          {isCollapsed && (
+            <button onClick={handleLogout} style={{
+              width: '100%', marginTop: '12px', background: 'rgba(239, 68, 68, 0.1)', border: 'none',
+              cursor: 'pointer', color: 'var(--danger)', fontSize: '18px', padding: '12px', borderRadius: '14px',
+              display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s',
+            }}>󰗽</button>
+          )}
         </div>
       </aside>
 
       {/* Main Content Area */}
-      <main className="animate-fade-in" style={{ flex: 1, overflowY: 'auto', padding: '48px 60px', position: 'relative', zIndex: 10 }}>
-        {children}
+      <main className="animate-fade-in" style={{ 
+        flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', position: 'relative', zIndex: 10 
+      }}>
+        <div style={{ flex: 1, padding: '48px 60px' }}>
+          {children}
+        </div>
+        <GlobalFooter />
       </main>
     </div>
   )

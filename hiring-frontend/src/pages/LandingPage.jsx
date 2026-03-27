@@ -1,77 +1,119 @@
+import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
 export default function LandingPage() {
   const navigate = useNavigate()
 
+  const hiringSteps = [
+    { title: 'Explore', desc: 'Find the perfect role that matches your skills.', icon: '󰈙', color: 'var(--accent2)' },
+    { title: 'Apply', desc: 'Submit your application through our modern portal.', icon: '󰏫', color: 'var(--accent)' },
+    { title: 'Screen', desc: 'Quick review by our expert talent acquisition team.', icon: '󰄬', color: 'var(--accent2)' },
+    { title: 'Meet', desc: 'Engage in meaningful conversations with the team.', icon: '󰕒', color: 'var(--accent)' },
+    { title: 'Join', desc: 'Welcome to the Coloured Cow family!', icon: '󰕔', color: 'var(--accent2)' }
+  ]
+
   return (
-    <div style={{ 
-      minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', 
-      background: 'var(--bg)', position: 'relative', overflow: 'hidden', padding: '20px'
-    }}>
-      {/* Background Blobs */}
-      <div style={{ position: 'absolute', top: '15%', left: '10%', width: '40vw', height: '40vw', background: 'radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%)', filter: 'blur(100px)', zIndex: 0 }}></div>
-      <div style={{ position: 'absolute', bottom: '15%', right: '10%', width: '40vw', height: '40vw', background: 'radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, transparent 70%)', filter: 'blur(100px)', zIndex: 0 }}></div>
-
-      <div className="animate-fade-in" style={{ textAlign: 'center', marginBottom: '60px', zIndex: 10 }}>
-        <div style={{ 
-          width: '64px', height: '64px', borderRadius: '18px', 
-          background: 'linear-gradient(135deg, var(--accent), #a78bfa)', 
-          margin: '0 auto 24px', display: 'flex', alignItems: 'center', justifyContent: 'center',
-          fontSize: '32px', fontWeight: '900', color: 'white',
-          boxShadow: '0 12px 24px rgba(139, 92, 246, 0.4)'
-        }}>C</div>
-        <h1 className="text-gradient" style={{ fontSize: '48px', fontWeight: '900', margin: '0 0 12px', letterSpacing: '-2px' }}>
-          ColoredCow Hiring
-        </h1>
-        <p style={{ color: 'var(--muted)', fontSize: '18px', fontWeight: '500', maxWidth: '500px', margin: '0 auto' }}>
-          The next generation talent acquisition and management suite. Choose your portal to begin.
-        </p>
-      </div>
-
-      <div style={{ 
-        display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', 
-        gap: '32px', width: '100%', maxWidth: '900px', zIndex: 10 
+    <div style={{ position: 'relative', overflow: 'hidden' }}>
+      {/* Hero Section */}
+      <section style={{ 
+        minHeight: '80vh', display: 'flex', flexDirection: 'column', 
+        alignItems: 'center', justifyContent: 'center', textAlign: 'center',
+        padding: '100px 20px', position: 'relative'
       }}>
-        {/* Candidate Portal */}
-        <div className="glass hover-glow animate-fade-in" onClick={() => navigate('/apply')} style={{ 
-          padding: '48px 40px', borderRadius: '32px', cursor: 'pointer', textAlign: 'center'
-        }}>
-          <div style={{ 
-            fontSize: '48px', marginBottom: '24px', display: 'inline-block',
-            padding: '20px', borderRadius: '24px', background: 'rgba(16, 185, 129, 0.1)', color: 'var(--accent2)'
-          }}>󰈙</div>
-          <h2 style={{ fontSize: '24px', fontWeight: '800', color: 'white', marginBottom: '16px' }}>Candidate Portal</h2>
-          <p style={{ fontSize: '15px', color: 'var(--muted)', lineHeight: 1.6, marginBottom: '32px' }}>
-            Looking for your next big challenge? Browse our open positions and submit your application today.
-          </p>
-          <div style={{ 
-            display: 'inline-flex', alignItems: 'center', gap: '8px', 
-            background: 'var(--accent2)', color: 'white', padding: '12px 24px', borderRadius: '14px', fontWeight: '700' 
-          }}>Apply Now →</div>
-        </div>
+        {/* Decorative Background */}
+        <div style={{ position: 'absolute', top: '-10%', left: '-5%', width: '50vw', height: '50vw', background: 'radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%)', filter: 'blur(120px)', zIndex: 0 }}></div>
+        <div style={{ position: 'absolute', bottom: '0', right: '-10%', width: '40vw', height: '40vw', background: 'radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, transparent 70%)', filter: 'blur(100px)', zIndex: 0 }}></div>
 
-        {/* HR Suite */}
-        <div className="glass hover-glow animate-fade-in" onClick={() => navigate('/login')} style={{ 
-          padding: '48px 40px', borderRadius: '32px', cursor: 'pointer', textAlign: 'center'
-        }}>
+        <div className="animate-fade-in" style={{ zIndex: 10, maxWidth: '900px' }}>
           <div style={{ 
-            fontSize: '48px', marginBottom: '24px', display: 'inline-block',
-            padding: '20px', borderRadius: '24px', background: 'rgba(139, 92, 246, 0.1)', color: 'var(--accent)'
-          }}>󰕒</div>
-          <h2 style={{ fontSize: '24px', fontWeight: '800', color: 'white', marginBottom: '16px' }}>HR Management</h2>
-          <p style={{ fontSize: '15px', color: 'var(--muted)', lineHeight: 1.6, marginBottom: '32px' }}>
-            Access the hiring dashboard to track applications, review candidates, and manage the pipeline.
+            display: 'inline-block', padding: '8px 20px', borderRadius: '100px', 
+            background: 'rgba(139, 92, 246, 0.1)', color: 'var(--accent)', 
+            fontSize: '13px', fontWeight: '800', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '32px' 
+          }}>Join Our Herd</div>
+          
+          <h1 className="text-gradient" style={{ fontSize: '84px', fontWeight: '900', margin: '0 0 24px', letterSpacing: '-4px', lineHeight: 0.9 }}>
+            ColoredCow
+          </h1>
+          
+          <p style={{ color: 'var(--muted)', fontSize: '22px', fontWeight: '500', maxWidth: '650px', margin: '0 auto 48px', lineHeight: 1.5 }}>
+            We're building the future of software, one exceptional talent at a time. 
+            Experience a hiring process designed for creators, thinkers, and builders.
           </p>
-          <div style={{ 
-            display: 'inline-flex', alignItems: 'center', gap: '8px', 
-            background: 'var(--accent)', color: 'white', padding: '12px 24px', borderRadius: '14px', fontWeight: '700' 
-          }}>Admin Login →</div>
+          
+          <div style={{ display: 'flex', gap: '20px', justifyContent: 'center' }}>
+            <button onClick={() => navigate('/select')} className="hover-glow" style={{ 
+              background: 'var(--accent)', color: 'white', border: 'none', 
+              padding: '18px 40px', borderRadius: '18px', fontWeight: '800', fontSize: '16px', cursor: 'pointer' 
+            }}>Get Started →</button>
+            <button onClick={() => {
+              document.getElementById('process').scrollIntoView({ behavior: 'smooth' })
+            }} style={{ 
+              background: 'transparent', color: 'var(--text)', border: '1px solid var(--border)', 
+              padding: '18px 40px', borderRadius: '18px', fontWeight: '800', fontSize: '16px', cursor: 'pointer' 
+            }}>Learn More</button>
+          </div>
         </div>
-      </div>
+      </section>
 
-      <div style={{ position: 'absolute', bottom: '40px', color: 'rgba(255,255,255,0.2)', fontSize: '12px', fontWeight: '600', letterSpacing: '1px' }}>
-        © 2026 COLOREDCOW. ALL RIGHTS RESERVED.
-      </div>
+      {/* Hiring Process Section */}
+      <section id="process" style={{ padding: '120px 40px', background: 'var(--surface2)', position: 'relative', zIndex: 10 }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', marginBottom: '80px' }}>
+            <h2 style={{ fontSize: '40px', fontWeight: '900', color: 'var(--text)', marginBottom: '16px' }}>Our Hiring Journey</h2>
+            <p style={{ color: 'var(--muted)', fontSize: '18px', maxWidth: '600px', margin: '0 auto' }}>Transparent, human-centric, and efficient. Here's how we find our next teammates.</p>
+          </div>
+
+          <div style={{ 
+            display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', 
+            gap: '32px', position: 'relative' 
+          }}>
+            {/* Connecting line (hidden on mobile) */}
+            <div style={{ 
+              position: 'absolute', top: '40px', left: '100px', right: '100px', height: '2px', 
+              background: 'linear-gradient(90deg, var(--accent) 0%, var(--accent2) 100%)', opacity: 0.1, zIndex: 0 
+            }}></div>
+
+            {hiringSteps.map((step, i) => (
+              <div key={i} className="animate-fade-in" style={{ 
+                textAlign: 'center', zIndex: 1, animationDelay: `${i * 0.1}s` 
+              }}>
+                <div style={{ 
+                  width: '80px', height: '80px', borderRadius: '24px', 
+                  background: 'var(--surface)', border: '1px solid var(--border)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  fontSize: '32px', color: step.color, margin: '0 auto 24px',
+                  boxShadow: '0 12px 24px rgba(0,0,0,0.05)',
+                  position: 'relative'
+                }}>
+                  {step.icon}
+                  <div style={{ 
+                    position: 'absolute', top: '-10px', right: '-10px', width: '28px', height: '28px',
+                    borderRadius: '50%', background: step.color, color: 'white', fontSize: '12px',
+                    fontWeight: '900', display: 'flex', alignItems: 'center', justifyContent: 'center'
+                  }}>{i + 1}</div>
+                </div>
+                <h3 style={{ fontSize: '20px', fontWeight: '800', color: 'var(--text)', marginBottom: '12px' }}>{step.title}</h3>
+                <p style={{ fontSize: '14px', color: 'var(--muted)', lineHeight: 1.6 }}>{step.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section style={{ padding: '100px 40px', textAlign: 'center' }}>
+        <div className="glass" style={{ 
+          maxWidth: '800px', margin: '0 auto', padding: '60px', borderRadius: '40px',
+          background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.05) 0%, rgba(16, 185, 129, 0.05) 100%)'
+        }}>
+          <h2 style={{ fontSize: '36px', fontWeight: '900', color: 'var(--text)', marginBottom: '24px' }}>Ready to make an impact?</h2>
+          <p style={{ color: 'var(--muted)', fontSize: '18px', marginBottom: '40px' }}>Join a team that values your growth and your unique perspective.</p>
+          <button onClick={() => navigate('/select')} className="hover-glow" style={{ 
+            background: 'var(--accent)', color: 'white', border: 'none', 
+            padding: '18px 48px', borderRadius: '18px', fontWeight: '800', fontSize: '16px', cursor: 'pointer' 
+          }}>Browse Opportunities</button>
+        </div>
+      </section>
     </div>
   )
 }

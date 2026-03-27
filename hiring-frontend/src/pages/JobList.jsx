@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import api from '../api/axios'
 
+
 export default function JobList() {
   const [jobs, setJobs] = useState([])
   const [loading, setLoading] = useState(true)
@@ -21,13 +22,9 @@ export default function JobList() {
   )
 
   return (
-    <div style={{ minHeight: '100vh', background: 'var(--bg)', padding: '60px 20px' }}>
+    <div style={{ padding: '80px 20px' }}>
       <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
         <div style={{ marginBottom: '60px', textAlign: 'center' }}>
-          <button onClick={() => navigate('/')} style={{ 
-            background: 'none', border: 'none', color: 'var(--accent2)', cursor: 'pointer', 
-            fontWeight: '700', fontSize: '14px', marginBottom: '24px' 
-          }}>← Back to Portal Selection</button>
           <h1 className="text-gradient" style={{ fontSize: '48px', fontWeight: '900', margin: '0 0 16px', letterSpacing: '-2px' }}>
             Open Positions
           </h1>
@@ -47,16 +44,13 @@ export default function JobList() {
                 }}>{job.department}</span>
                 <span style={{ color: 'var(--muted)', fontSize: '13px', fontWeight: '600' }}>{job.location}</span>
               </div>
-              <h2 style={{ fontSize: '22px', fontWeight: '800', color: 'white', marginBottom: '12px' }}>{job.title}</h2>
+              <h2 style={{ fontSize: '22px', fontWeight: '800', color: 'var(--text)', marginBottom: '12px' }}>{job.title}</h2>
               <p style={{ fontSize: '14px', color: 'var(--muted)', lineHeight: 1.6, marginBottom: '24px', height: '44px', overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>
                 {job.description}
               </p>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <div style={{ color: 'white', fontWeight: '700', fontSize: '14px' }}>
-                  {(() => {
-                    const cleanSalary = job.salary_range?.replace(/\$/g, '') || 'Competitive';
-                    return cleanSalary.includes('₹') ? cleanSalary : `₹${cleanSalary}`;
-                  })()}
+                <div style={{ color: 'var(--text)', fontWeight: '700', fontSize: '14px' }}>
+                  {job.salary_range}
                 </div>
                 <button onClick={() => navigate(`/jobs/${job.id}`)} style={{ 
                   background: 'var(--accent)', color: 'white', border: 'none', 

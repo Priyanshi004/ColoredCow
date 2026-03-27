@@ -10,6 +10,8 @@ const statusColors = {
   rejected: '#ef4444',
 }
 
+const tableHeaderStyle = { padding: '20px 32px', textAlign: 'left', fontSize: '11px', fontWeight: '800', color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '2.5px', borderBottom: '1px solid var(--border)' }
+
 export default function Applications() {
   const [applications, setApplications] = useState([])
   const [loading, setLoading] = useState(true)
@@ -50,34 +52,34 @@ export default function Applications() {
       </div>
 
       {/* Filters */}
-      <div className="glass" style={{ padding: '24px 32px', borderRadius: '24px', marginBottom: '32px', display: 'flex', flexWrap: 'wrap', gap: '16px', background: 'rgba(255,255,255,0.02)' }}>
+      <div className="glass" style={{ padding: '24px 32px', borderRadius: '24px', marginBottom: '32px', display: 'flex', flexWrap: 'wrap', gap: '16px', background: 'var(--surface)' }}>
         <select value={filters.status} onChange={e => setFilters({ ...filters, status: e.target.value })} 
-          style={{ background: 'rgba(255,255,255,0.05)', color: 'white', border: '1px solid rgba(255,255,255,0.1)', padding: '12px 16px', borderRadius: '12px', fontSize: '14px', flex: 1, minWidth: '150px', outline: 'none' }}>
-          <option value="" style={{ background: '#1a1d21', color: 'white' }}>All Statuses</option>
-          <option value="pending" style={{ background: '#1a1d21', color: 'white' }}>Pending</option>
-          <option value="reviewed" style={{ background: '#1a1d21', color: 'white' }}>Reviewed</option>
-          <option value="approved" style={{ background: '#1a1d21', color: 'white' }}>Approved</option>
-          <option value="rejected" style={{ background: '#1a1d21', color: 'white' }}>Rejected</option>
+          style={{ background: 'var(--surface2)', color: 'var(--text)', border: '1px solid var(--border)', padding: '12px 16px', borderRadius: '12px', fontSize: '14px', flex: 1, minWidth: '150px', outline: 'none' }}>
+          <option value="" style={{ background: 'var(--bg)', color: 'var(--text)' }}>All Statuses</option>
+          <option value="pending" style={{ background: 'var(--bg)', color: 'var(--text)' }}>Pending</option>
+          <option value="reviewed" style={{ background: 'var(--bg)', color: 'var(--text)' }}>Reviewed</option>
+          <option value="approved" style={{ background: 'var(--bg)', color: 'var(--text)' }}>Approved</option>
+          <option value="rejected" style={{ background: 'var(--bg)', color: 'var(--text)' }}>Rejected</option>
         </select>
         <select value={filters.job_opening_id} onChange={e => setFilters({ ...filters, job_opening_id: e.target.value })} 
-          style={{ background: 'rgba(255,255,255,0.05)', color: 'white', border: '1px solid rgba(255,255,255,0.1)', padding: '12px 16px', borderRadius: '12px', fontSize: '14px', flex: 2, minWidth: '200px', outline: 'none' }}>
-          <option value="" style={{ background: '#1a1d21', color: 'white' }}>All Positions</option>
-          {jobs.map(j => <option key={j.id} value={j.id} style={{ background: '#1a1d21', color: 'white' }}>{j.title}</option>)}
+          style={{ background: 'var(--surface2)', color: 'var(--text)', border: '1px solid var(--border)', padding: '12px 16px', borderRadius: '12px', fontSize: '14px', flex: 2, minWidth: '200px', outline: 'none' }}>
+          <option value="" style={{ background: 'var(--bg)', color: 'var(--text)' }}>All Positions</option>
+          {jobs.map(j => <option key={j.id} value={j.id} style={{ background: 'var(--bg)', color: 'var(--text)' }}>{j.title}</option>)}
         </select>
         <input type="text" placeholder="Filter by City..." value={filters.city} onChange={e => setFilters({ ...filters, city: e.target.value })} 
-          style={{ background: 'rgba(255,255,255,0.05)', color: 'white', border: '1px solid rgba(255,255,255,0.1)', padding: '12px 16px', borderRadius: '12px', fontSize: '14px', flex: 1, minWidth: '150px' }} />
+          style={{ background: 'var(--surface2)', color: 'var(--text)', border: '1px solid var(--border)', padding: '12px 16px', borderRadius: '12px', fontSize: '14px', flex: 1, minWidth: '150px' }} />
         <button onClick={() => setFilters({ status: '', job_opening_id: '', city: '', college: '', graduation_year: '' })} 
           style={{ border: 'none', background: 'transparent', color: 'var(--accent)', fontWeight: '700', fontSize: '13px', cursor: 'pointer', padding: '0 10px' }}>Reset Filters</button>
       </div>
 
       {/* Table */}
-      <div className="glass" style={{ borderRadius: '28px', overflow: 'hidden' }}>
+      <div className="glass" style={{ borderRadius: '28px', overflow: 'hidden', background: 'var(--surface)' }}>
         <div style={{ overflowX: 'auto' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
-              <tr style={{ background: 'rgba(255,255,255,0.02)' }}>
+              <tr style={{ background: 'var(--surface2)' }}>
                 {['Candidate', 'Position', 'Status', 'Actions'].map(h => (
-                  <th key={h} style={{ padding: '20px 32px', textAlign: 'left', fontSize: '11px', fontWeight: '800', color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '2.5px' }}>{h}</th>
+                  <th key={h} style={tableHeaderStyle}>{h}</th>
                 ))}
               </tr>
             </thead>
@@ -88,15 +90,15 @@ export default function Applications() {
                 <tr><td colSpan="4" style={{ padding: '60px', textAlign: 'center', color: 'var(--muted)', fontSize: '14px' }}>No applications match your filters.</td></tr>
               ) : applications.map(app => (
                 <tr key={app.id} onClick={() => navigate(`/applications/${app.id}`)} 
-                  style={{ borderTop: '1px solid rgba(255,255,255,0.05)', cursor: 'pointer', transition: 'all 0.2s' }}
-                  onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.02)'}
+                  style={{ borderBottom: '1px solid var(--border)', cursor: 'pointer', transition: 'all 0.2s' }}
+                  onMouseEnter={e => e.currentTarget.style.background = 'var(--surface2)'}
                   onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
                 >
                   <td style={{ padding: '20px 32px' }}>
-                    <div style={{ fontWeight: '700', fontSize: '15px', color: 'white' }}>{app.full_name}</div>
+                    <div style={{ fontWeight: '700', fontSize: '15px', color: 'var(--text)' }}>{app.full_name}</div>
                     <div style={{ fontSize: '12px', color: 'var(--muted)', marginTop: '2px' }}>{app.email}</div>
                   </td>
-                  <td style={{ padding: '20px 32px', fontSize: '14px', color: 'white', fontWeight: '600' }}>{app.job_opening?.title}</td>
+                  <td style={{ padding: '20px 32px', fontSize: '14px', color: 'var(--text)', fontWeight: '600' }}>{app.job_opening?.title}</td>
                   <td style={{ padding: '20px 32px' }}>
                     <span style={{ 
                       padding: '6px 14px', borderRadius: '10px', fontSize: '11px', fontWeight: '800', 

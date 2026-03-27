@@ -10,6 +10,8 @@ const statusColors = {
   rejected: '#ef4444',
 }
 
+const tableHeaderStyle = { padding: '20px 40px', textAlign: 'left', fontSize: '11px', fontWeight: '800', color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '2.5px', borderBottom: '1px solid var(--border)' }
+
 export default function Dashboard() {
   const [data, setData] = useState(null)
   const navigate = useNavigate()
@@ -37,12 +39,12 @@ export default function Dashboard() {
           </h1>
           <p style={{ color: 'var(--muted)', fontSize: '16px', margin: 0, fontWeight: '500' }}>Here is what's happening in your hiring pipeline today.</p>
         </div>
-        <div className="glass" style={{ padding: '12px 24px', borderRadius: '16px', display: 'flex', alignItems: 'center', gap: '12px', background: 'rgba(255,255,255,0.02)' }}>
+        <div className="glass" style={{ padding: '12px 24px', borderRadius: '16px', display: 'flex', alignItems: 'center', gap: '12px', background: 'var(--surface)' }}>
           <span style={{ fontSize: '20px' }}>󰃭</span>
           <span style={{ fontSize: '14px', fontWeight: '700', color: 'var(--text)' }}>{new Date().toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' })}</span>
         </div>
       </div>
-
+ 
       {/* Stats grid */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '24px', marginBottom: '56px' }}>
         <StatCard title="Total Applications" value={data.stats.total_applications} subtitle="Overall volume" accent="var(--accent)" />
@@ -50,16 +52,16 @@ export default function Dashboard() {
         <StatCard title="Pending Review" value={data.stats.pending} subtitle="Action required" accent="var(--warn)" />
         <StatCard title="Approved" value={data.stats.approved} subtitle="Ready for offer" accent="var(--accent2)" />
       </div>
-
+ 
       {/* Recent applications */}
-      <div className="glass" style={{ borderRadius: '32px', overflow: 'hidden', padding: '8px' }}>
+      <div className="glass" style={{ borderRadius: '32px', overflow: 'hidden', padding: '8px', background: 'var(--surface)' }}>
         <div style={{ padding: '32px 40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div>
-            <h2 style={{ fontSize: '20px', fontWeight: '800', color: 'white', margin: '0 0 4px' }}>Recent Candidates</h2>
+            <h2 style={{ fontSize: '20px', fontWeight: '800', color: 'var(--text)', margin: '0 0 4px' }}>Recent Candidates</h2>
             <p style={{ fontSize: '13px', color: 'var(--muted)', margin: 0 }}>Latest submissions from the last 24 hours</p>
           </div>
           <button onClick={() => navigate('/applications')} className="hover-glow" style={{
-            background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: 'white',
+            background: 'var(--surface2)', border: '1px solid var(--border)', color: 'var(--text)',
             padding: '12px 24px', borderRadius: '14px', cursor: 'pointer', fontSize: '14px', fontWeight: '700',
             transition: 'all 0.3s',
           }}>Deep tracking →</button>
@@ -68,32 +70,32 @@ export default function Dashboard() {
         <div style={{ overflowX: 'auto' }}>
           <table style={{ width: '100%', borderCollapse: 'separate', borderSpacing: '0 4px' }}>
             <thead>
-              <tr style={{ background: 'rgba(255,255,255,0.02)' }}>
+              <tr style={{ background: 'var(--surface2)' }}>
                 {['Candidate', 'Applied For', 'City', 'Status', 'Applied Date'].map(h => (
-                  <th key={h} style={{ padding: '20px 40px', textAlign: 'left', fontSize: '11px', fontWeight: '800', color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '2.5px' }}>{h}</th>
+                  <th key={h} style={tableHeaderStyle}>{h}</th>
                 ))}
               </tr>
             </thead>
             <tbody>
               {data.recent_applications.map((app) => (
                 <tr key={app.id} onClick={() => navigate(`/applications/${app.id}`)}
-                  style={{ cursor: 'pointer', transition: 'all 0.3s' }}
-                  onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.03)'}
+                  style={{ cursor: 'pointer', transition: 'all 0.3s', borderBottom: '1px solid var(--border)' }}
+                  onMouseEnter={e => e.currentTarget.style.background = 'var(--surface2)'}
                   onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
                 >
                   <td style={{ padding: '24px 40px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-                      <div style={{ width: '40px', height: '40px', borderRadius: '12px', background: 'rgba(255,255,255,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: '700', fontSize: '14px', color: 'var(--accent)' }}>
+                      <div style={{ width: '40px', height: '40px', borderRadius: '12px', background: 'var(--glass-bg)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: '700', fontSize: '14px', color: 'var(--accent)' }}>
                         {app.full_name[0]}
                       </div>
                       <div>
-                        <div style={{ fontWeight: '700', fontSize: '15px', color: 'white' }}>{app.full_name}</div>
+                        <div style={{ fontWeight: '700', fontSize: '15px', color: 'var(--text)' }}>{app.full_name}</div>
                         <div style={{ fontSize: '12px', color: 'var(--muted)', marginTop: '2px' }}>{app.email}</div>
                       </div>
                     </div>
                   </td>
                   <td style={{ padding: '24px 40px' }}>
-                    <div style={{ fontSize: '14px', color: 'white', fontWeight: '600' }}>{app.job_opening?.title}</div>
+                    <div style={{ fontSize: '14px', color: 'var(--text)', fontWeight: '600' }}>{app.job_opening?.title}</div>
                     <div style={{ fontSize: '11px', color: 'var(--muted)', marginTop: '4px' }}>Permanent Role</div>
                   </td>
                   <td style={{ padding: '24px 40px', fontSize: '14px', color: 'var(--muted)', fontWeight: '500' }}>{app.city || 'Remote'}</td>

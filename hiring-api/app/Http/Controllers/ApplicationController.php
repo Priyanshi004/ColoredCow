@@ -59,6 +59,9 @@ class ApplicationController extends Controller
             'city'            => 'nullable|string|max:100',
             'college'         => 'nullable|string|max:255',
             'graduation_year' => 'nullable|string|max:4',
+            'address'         => 'nullable|string',
+            'education'       => 'nullable|string',
+            'experience'      => 'nullable|string',
             'cover_letter'    => 'nullable|string',
             'resume'          => 'nullable|file|mimes:pdf,doc,docx|max:5120',
         ]);
@@ -76,13 +79,16 @@ class ApplicationController extends Controller
             'city'            => $data['city'] ?? null,
             'college'         => $data['college'] ?? null,
             'graduation_year' => $data['graduation_year'] ?? null,
+            'address'         => $data['address'] ?? null,
+            'education'       => $data['education'] ?? null,
+            'experience'      => $data['experience'] ?? null,
             'cover_letter'    => $data['cover_letter'] ?? null,
             'resume_path'     => $resumePath,
             'status'          => 'pending',
         ]);
 
         $application->load('jobOpening');
-        Mail::to($application->email)->send(new ApplicationReceivedMail($application));
+        // Mail::to($application->email)->send(new ApplicationReceivedMail($application));
 
         return response()->json(['message' => 'Application submitted successfully'], 201);
     }
@@ -124,15 +130,15 @@ class ApplicationController extends Controller
 
         $application->update(['status' => $data['status']]);
 
-        try {
-            if ($data['status'] === 'approved') {
-                Mail::to($application->email)->send(new ApplicationApprovedMail($application));
-            } elseif ($data['status'] === 'rejected') {
-                Mail::to($application->email)->send(new ApplicationRejectedMail($application));
-            }
-        } catch (\Exception $e) {
-            \Log::error("Mail failed: " . $e->getMessage());
-        }
+        // try {
+        //     if ($data['status'] === 'approved') {
+        //         Mail::to($application->email)->send(new ApplicationApprovedMail($application));
+        //     } elseif ($data['status'] === 'rejected') {
+        //         Mail::to($application->email)->send(new ApplicationRejectedMail($application));
+        //     }
+        // } catch (\Exception $e) {
+        //     \Log::error("Mail failed: " . $e->getMessage());
+        // }
 
         return response()->json(['message' => 'Application updated successfully', 'application' => $application]);
     }
