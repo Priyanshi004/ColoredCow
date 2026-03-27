@@ -2,9 +2,8 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import ThemeToggle from './ThemeToggle'
 
-export default function GlobalHeader() {
+export default function GlobalHeader({ showLogout = false, onLogout = null }) {
   const navigate = useNavigate()
-
 
   return (
     <header className="glass" style={{
@@ -30,11 +29,17 @@ export default function GlobalHeader() {
       </div>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: '32px' }}>
-        <p style={{ color: 'var(--muted)', fontSize: '13px', fontWeight: '600', margin: 0, maxWidth: '300px', textAlign: 'right' }}>
+        <p style={{ color: 'var(--muted)', fontSize: '13px', fontWeight: '600', margin: 0, maxWidth: '300px', textAlign: 'right', display: window.innerWidth < 768 ? 'none' : 'block' }}>
           Discover opportunities that match your passion and skills.
         </p>
         <ThemeToggle />
-
+        {showLogout && (
+          <button onClick={onLogout} className="hover-glow" style={{
+            background: 'var(--accent)', color: 'white', border: 'none',
+            padding: '10px 24px', borderRadius: '12px', fontWeight: '800', fontSize: '13px',
+            cursor: 'pointer', transition: 'all 0.3s'
+          }}>LOGOUT</button>
+        )}
       </div>
     </header>
   )

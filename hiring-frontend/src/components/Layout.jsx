@@ -12,6 +12,7 @@ const navItems = [
   { to: '/reports', label: 'Reports', icon: '󰦕' },
 ]
 
+import GlobalHeader from './GlobalHeader'
 import GlobalFooter from './GlobalFooter'
 
 export default function Layout({ children }) {
@@ -60,21 +61,19 @@ export default function Layout({ children }) {
               </div>
             )}
           </div>
-          <div style={{ marginTop: '24px', display: 'flex', justifyContent: isCollapsed ? 'center' : 'space-between', alignItems: 'center', gap: '12px' }}>
-            <ThemeToggle />
-            {!isCollapsed && (
+          <div style={{ marginTop: '24px', display: 'flex', justifyContent: isCollapsed ? 'center' : 'center', alignItems: 'center' }}>
+            {isCollapsed ? (
+               <button 
+               onClick={() => setIsCollapsed(false)}
+               style={{ background: 'none', border: 'none', color: 'var(--muted)', cursor: 'pointer', fontSize: '20px' }}
+               title="Expand Sidebar"
+             >󰍜</button>
+            ) : (
               <button 
                 onClick={() => setIsCollapsed(true)}
-                style={{ background: 'none', border: 'none', color: 'var(--muted)', cursor: 'pointer', fontSize: '20px', padding: '4px' }}
+                style={{ background: 'none', border: 'none', color: 'var(--muted)', cursor: 'pointer', fontSize: '20px', display: 'flex', alignItems: 'center', gap: '8px' }}
                 title="Collapse Sidebar"
-              >󰅖</button>
-            )}
-            {isCollapsed && (
-              <button 
-                onClick={() => setIsCollapsed(false)}
-                style={{ background: 'none', border: 'none', color: 'var(--muted)', cursor: 'pointer', fontSize: '20px', marginTop: '12px' }}
-                title="Expand Sidebar"
-              >󰍜</button>
+              >󰅖 <span style={{ fontSize: '11px', fontWeight: '800' }}>COLLAPSE</span></button>
             )}
           </div>
         </div>
@@ -104,53 +103,34 @@ export default function Layout({ children }) {
           ))}
         </nav>
 
-        {/* User Footer */}
-        <div style={{ padding: '24px 16px', borderTop: '1px solid var(--sidebar-border)' }}>
-          <div style={{
-            display: 'flex', alignItems: 'center', gap: '14px',
-            justifyContent: isCollapsed ? 'center' : 'flex-start',
-            padding: '12px', borderRadius: '20px', background: 'rgba(124, 114, 255, 0.05)',
-            border: '1px solid var(--sidebar-border)',
-          }}>
+        {/* User Footer (Simplified) */}
+        {!isCollapsed && (
+          <div style={{ padding: '24px 16px', borderTop: '1px solid var(--sidebar-border)' }}>
             <div style={{
-              width: '40px', height: '40px', borderRadius: '12px',
-              background: 'linear-gradient(135deg, #10b981, #34d399)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: '16px', fontWeight: '800', color: 'white', flexShrink: 0,
-              boxShadow: '0 4px 12px rgba(16, 185, 129, 0.2)',
-            }}>{user?.name ? user.name[0].toUpperCase() : 'A'}</div>
-            {!isCollapsed && (
+              display: 'flex', alignItems: 'center', gap: '14px',
+              padding: '12px', borderRadius: '20px', background: 'rgba(124, 114, 255, 0.05)',
+              border: '1px solid var(--sidebar-border)',
+            }}>
+              <div style={{
+                width: '40px', height: '40px', borderRadius: '12px',
+                background: 'linear-gradient(135deg, #10b981, #34d399)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: '16px', fontWeight: '800', color: 'white', flexShrink: 0,
+              }}>{user?.name ? user.name[0].toUpperCase() : 'A'}</div>
               <div className="animate-fade-in" style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ fontSize: '14px', fontWeight: '700', color: 'var(--sidebar-text)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{user?.name || 'Recruiter'}</div>
-                <div style={{ fontSize: '11px', color: 'var(--accent2)', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                  <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--accent2)', boxShadow: '0 0 10px var(--accent2)' }}></span>
-                  Online
-                </div>
+                <div style={{ fontSize: '11px', color: 'var(--accent2)', fontWeight: '700' }}>Online</div>
               </div>
-            )}
-            {!isCollapsed && (
-              <button onClick={handleLogout} className="hover-glow" style={{
-                background: 'rgba(239, 68, 68, 0.1)', border: 'none', cursor: 'pointer',
-                color: 'var(--danger)', fontSize: '18px', padding: '8px', borderRadius: '10px',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                transition: 'all 0.2s',
-              }}>󰗽</button>
-            )}
+            </div>
           </div>
-          {isCollapsed && (
-            <button onClick={handleLogout} style={{
-              width: '100%', marginTop: '12px', background: 'rgba(239, 68, 68, 0.1)', border: 'none',
-              cursor: 'pointer', color: 'var(--danger)', fontSize: '18px', padding: '12px', borderRadius: '14px',
-              display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s',
-            }}>󰗽</button>
-          )}
-        </div>
+        )}
       </aside>
 
-      {/* Main Content Area */}
+      {/* Main Content Area with Header */}
       <main className="animate-fade-in" style={{ 
         flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', position: 'relative', zIndex: 10 
       }}>
+        <GlobalHeader showLogout={true} onLogout={handleLogout} />
         <div style={{ flex: 1, padding: '48px 60px' }}>
           {children}
         </div>
