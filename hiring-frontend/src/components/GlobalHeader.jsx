@@ -29,7 +29,7 @@ export default function GlobalHeader({ showLogout = false, onLogout = null }) {
       </div>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: '32px' }}>
-        <p style={{ color: 'var(--muted)', fontSize: '13px', fontWeight: '600', margin: 0, maxWidth: '300px', textAlign: 'right', display: window.innerWidth < 768 ? 'none' : 'block' }}>
+        <p className="mobile-hide" style={{ color: 'var(--muted)', fontSize: '13px', fontWeight: '600', margin: 0, maxWidth: '300px', textAlign: 'right' }}>
           Discover opportunities that match your passion and skills.
         </p>
         <ThemeToggle />

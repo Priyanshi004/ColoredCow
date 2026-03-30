@@ -22,10 +22,10 @@ export default function JobList() {
   )
 
   return (
-    <div style={{ padding: '80px 20px' }}>
+    <div className="mobile-padding" style={{ padding: '80px 20px' }}>
       <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
         <div style={{ marginBottom: '60px', textAlign: 'center' }}>
-          <h1 className="text-gradient" style={{ fontSize: '48px', fontWeight: '900', margin: '0 0 16px', letterSpacing: '-2px' }}>
+          <h1 className="text-gradient" style={{ fontSize: 'clamp(32px, 8vw, 48px)', fontWeight: '900', margin: '0 0 16px', letterSpacing: '-2px' }}>
             Open Positions
           </h1>
           <p style={{ color: 'var(--muted)', fontSize: '18px', fontWeight: '500' }}>
@@ -33,7 +33,7 @@ export default function JobList() {
           </p>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '24px' }}>
+        <div className="mobile-grid-1" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '24px' }}>
           {jobs.map((job, i) => (
             <div key={job.id} className="glass hover-glow animate-fade-in" 
               style={{ padding: '32px', borderRadius: '24px', animationDelay: `${i * 0.1}s` }}>

@@ -47,12 +47,12 @@ export default function Applications() {
   return (
     <div className="animate-fade-in">
       <div style={{ marginBottom: '40px' }}>
-        <h1 className="text-gradient" style={{ fontSize: '36px', fontWeight: '900', margin: '0 0 8px', letterSpacing: '-1.5px' }}>Application Tracking</h1>
+        <h1 className="text-gradient" style={{ fontSize: 'clamp(28px, 6vw, 36px)', fontWeight: '900', margin: '0 0 8px', letterSpacing: '-1.5px' }}>Application Tracking</h1>
         <p style={{ color: 'var(--muted)', fontSize: '15px' }}>Manage and filter through all submitted candidate profiles.</p>
       </div>
 
       {/* Filters */}
-      <div className="glass" style={{ padding: '24px 32px', borderRadius: '24px', marginBottom: '32px', display: 'flex', flexWrap: 'wrap', gap: '16px', background: 'var(--surface)' }}>
+      <div className="glass mobile-stack" style={{ padding: '24px 32px', borderRadius: '24px', marginBottom: '32px', display: 'flex', flexWrap: 'wrap', gap: '16px', background: 'var(--surface)' }}>
         <select value={filters.status} onChange={e => setFilters({ ...filters, status: e.target.value })} 
           style={{ background: 'var(--surface2)', color: 'var(--text)', border: '1px solid var(--border)', padding: '12px 16px', borderRadius: '12px', fontSize: '14px', flex: 1, minWidth: '150px', outline: 'none' }}>
           <option value="" style={{ background: 'var(--bg)', color: 'var(--text)' }}>All Statuses</option>
@@ -69,13 +69,13 @@ export default function Applications() {
         <input type="text" placeholder="Filter by City..." value={filters.city} onChange={e => setFilters({ ...filters, city: e.target.value })} 
           style={{ background: 'var(--surface2)', color: 'var(--text)', border: '1px solid var(--border)', padding: '12px 16px', borderRadius: '12px', fontSize: '14px', flex: 1, minWidth: '150px' }} />
         <button onClick={() => setFilters({ status: '', job_opening_id: '', city: '', college: '', graduation_year: '' })} 
-          style={{ border: 'none', background: 'transparent', color: 'var(--accent)', fontWeight: '700', fontSize: '13px', cursor: 'pointer', padding: '0 10px' }}>Reset Filters</button>
+          style={{ border: 'none', background: 'transparent', color: 'var(--accent)', fontWeight: '700', fontSize: '13px', cursor: 'pointer', padding: '10px' }}>Reset Filters</button>
       </div>
 
       {/* Table */}
-      <div className="glass" style={{ borderRadius: '28px', overflow: 'hidden', background: 'var(--surface)' }}>
+      <div className="glass hide-scrollbar" style={{ borderRadius: '28px', overflowX: 'auto', background: 'var(--surface)' }}>
         <div style={{ overflowX: 'auto' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+          <table style={{ width: '100%', minWidth: '900px', borderCollapse: 'collapse' }}>
             <thead>
               <tr style={{ background: 'var(--surface2)' }}>
                 {['Candidate', 'Position', 'Status', 'Actions'].map(h => (

@@ -4,7 +4,7 @@ export default function PortalSelection() {
   const navigate = useNavigate()
 
   return (
-    <div style={{ 
+    <div className="mobile-padding" style={{ 
       display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', 
       position: 'relative', overflow: 'hidden', padding: '80px 20px'
     }}>
@@ -13,7 +13,7 @@ export default function PortalSelection() {
       <div style={{ position: 'absolute', bottom: '15%', right: '10%', width: '40vw', height: '40vw', background: 'radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, transparent 70%)', filter: 'blur(100px)', zIndex: 0 }}></div>
 
       <div className="animate-fade-in" style={{ textAlign: 'center', marginBottom: '60px', zIndex: 10 }}>
-        <h1 className="text-gradient" style={{ fontSize: '56px', fontWeight: '900', margin: '0 0 16px', letterSpacing: '-2px' }}>
+        <h1 className="text-gradient" style={{ fontSize: 'clamp(32px, 8vw, 56px)', fontWeight: '900', margin: '0 0 16px', letterSpacing: '-2px' }}>
           Choose Your Portal
         </h1>
         <p style={{ color: 'var(--muted)', fontSize: '18px', fontWeight: '500', maxWidth: '500px', margin: '0 auto' }}>
@@ -21,7 +21,7 @@ export default function PortalSelection() {
         </p>
       </div>
 
-      <div style={{ 
+      <div className="mobile-grid-1" style={{ 
         display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', 
         gap: '32px', width: '100%', maxWidth: '900px', zIndex: 10 
       }}>
@@ -44,7 +44,7 @@ export default function PortalSelection() {
         </div>
 
         {/* HR Suite */}
-        <div className="glass hover-glow animate-fade-in" onClick={() => navigate('/dashboard')} style={{ 
+        <div className="glass hover-glow animate-fade-in" onClick={() => navigate('/login')} style={{ 
           padding: '48px 40px', borderRadius: '32px', cursor: 'pointer', textAlign: 'center'
         }}>
           <div style={{ 
@@ -58,8 +58,9 @@ export default function PortalSelection() {
           <div style={{ 
             display: 'inline-flex', alignItems: 'center', gap: '8px', 
             background: 'var(--accent)', color: 'white', padding: '12px 24px', borderRadius: '14px', fontWeight: '700' 
-          }}>Open Dashboard →</div>
+          }}>Admin Login →</div>
         </div>
+
 
       </div>
     </div>

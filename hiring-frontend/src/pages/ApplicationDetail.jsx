@@ -38,29 +38,29 @@ export default function ApplicationDetail() {
         display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '32px', fontWeight: '700', fontSize: '14px' 
       }}>← Back to Tracking</button>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1.8fr 1fr', gap: '32px' }}>
+      <div className="mobile-grid-1" style={{ display: 'grid', gridTemplateColumns: '1.8fr 1fr', gap: '32px' }}>
         {/* Left Column: Details */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
           <div className="glass" style={{ padding: '40px', borderRadius: '32px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '24px', marginBottom: '40px' }}>
+            <div className="mobile-stack" style={{ display: 'flex', alignItems: 'center', gap: '24px', marginBottom: '40px' }}>
               <div style={{ 
                 width: '80px', height: '80px', borderRadius: '24px', 
                 background: 'linear-gradient(135deg, var(--accent), var(--accent2))',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 fontSize: '32px', fontWeight: '800', color: 'white',
-                boxShadow: '0 12px 24px rgba(139, 92, 246, 0.3)'
+                boxShadow: '0 12px 24px rgba(139, 92, 246, 0.3)', flexShrink: 0
               }}>{app.full_name[0]}</div>
               <div>
-                <h1 style={{ fontSize: '28px', fontWeight: '900', color: 'white', margin: '0 0 4px', letterSpacing: '-1px' }}>{app.full_name}</h1>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <h1 style={{ fontSize: 'clamp(20px, 5vw, 28px)', fontWeight: '900', color: 'white', margin: '0 0 4px', letterSpacing: '-1px' }}>{app.full_name}</h1>
+                <div className="mobile-stack" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                   <span style={{ fontSize: '14px', color: 'var(--muted)', fontWeight: '600' }}>{app.email}</span>
-                  <span style={{ width: '4px', height: '4px', background: 'rgba(255,255,255,0.2)', borderRadius: '50%' }}></span>
+                  <span className="mobile-hide" style={{ width: '4px', height: '4px', background: 'rgba(255,255,255,0.2)', borderRadius: '50%' }}></span>
                   <span style={{ fontSize: '14px', color: 'var(--accent2)', fontWeight: '700' }}>{app.job_opening?.title} Candidate</span>
                 </div>
               </div>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '28px' }}>
+            <div className="mobile-grid-1" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '28px' }}>
               {[
                 { label: 'Phone', value: app.phone },
                 { label: 'City', value: app.city },

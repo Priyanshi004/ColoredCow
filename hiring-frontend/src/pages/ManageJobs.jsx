@@ -61,19 +61,19 @@ export default function ManageJobs() {
 
   return (
     <div className="animate-fade-in">
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
+      <div className="mobile-stack" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
         <div>
-          <h1 style={{ fontSize: '28px', fontWeight: '800', color: 'var(--text)', margin: '0 0 4px' }}>Job Management</h1>
+          <h1 style={{ fontSize: 'clamp(24px, 6vw, 28px)', fontWeight: '800', color: 'var(--text)', margin: '0 0 4px' }}>Job Management</h1>
           <p style={{ color: 'var(--muted)', fontSize: '14px' }}>Manage active openings and recruit new talent.</p>
         </div>
         <button onClick={() => setShowModal(true)} className="hover-glow" style={{ 
           background: 'var(--accent)', color: 'white', border: 'none', padding: '12px 24px', 
-          borderRadius: '14px', fontWeight: '700', cursor: 'pointer' 
+          borderRadius: '14px', fontWeight: '700', cursor: 'pointer', width: window.innerWidth < 768 ? '100%' : 'auto'
         }}>+ Add New Position</button>
       </div>
 
-      <div className="glass" style={{ borderRadius: '24px', overflow: 'hidden', background: 'var(--surface)' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+      <div className="glass hide-scrollbar" style={{ borderRadius: '24px', overflowX: 'auto', background: 'var(--surface)' }}>
+        <table style={{ width: '100%', minWidth: '800px', borderCollapse: 'collapse', textAlign: 'left' }}>
           <thead>
             <tr style={{ background: 'var(--surface2)' }}>
               <th style={tableHeaderStyle}>Position</th>
@@ -132,7 +132,7 @@ export default function ManageJobs() {
           <div className="glass shadow-premium" style={{ width: '100%', maxWidth: '600px', padding: '40px', borderRadius: '32px', background: 'var(--surface2)' }}>
             <h2 style={{ fontSize: '24px', fontWeight: '800', color: 'var(--text)', marginBottom: '24px' }}>Add New Position</h2>
             <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+              <div className="mobile-grid-1" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                 <div>
                   <label style={{ fontSize: '12px', color: 'var(--muted)', display: 'block', marginBottom: '8px', fontWeight: '700' }}>Title</label>
                   <input style={inputStyle} value={form.title} onChange={e => setForm({...form, title: e.target.value})} required placeholder="Software Engineer" />
@@ -142,7 +142,7 @@ export default function ManageJobs() {
                   <input style={inputStyle} value={form.department} onChange={e => setForm({...form, department: e.target.value})} required placeholder="Engineering" />
                 </div>
               </div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+              <div className="mobile-grid-1" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                 <div>
                   <label style={{ fontSize: '12px', color: 'var(--muted)', display: 'block', marginBottom: '8px', fontWeight: '700' }}>Location</label>
                   <input style={inputStyle} value={form.location} onChange={e => setForm({...form, location: e.target.value})} required placeholder="Remote / On-site" />
@@ -160,7 +160,7 @@ export default function ManageJobs() {
                 <label style={{ fontSize: '12px', color: 'var(--muted)', display: 'block', marginBottom: '8px', fontWeight: '700' }}>Requirements (bullet points)</label>
                 <textarea style={{ ...inputStyle, minHeight: '80px', resize: 'none' }} value={form.requirements} onChange={e => setForm({...form, requirements: e.target.value})} placeholder="• 3+ years experience..." />
               </div>
-              <div style={{ display: 'flex', gap: '12px', marginTop: '12px' }}>
+              <div className="mobile-stack" style={{ display: 'flex', gap: '12px', marginTop: '12px' }}>
                 <button type="button" onClick={() => setShowModal(false)} style={{ 
                   flex: 1, padding: '14px', borderRadius: '12px', background: 'var(--surface)', 
                   border: '1px solid var(--border)', color: 'var(--text)', fontWeight: '700', cursor: 'pointer' 

@@ -34,8 +34,8 @@ export default function Layout({ children }) {
       <div style={{ position: 'absolute', bottom: '15%', right: '10%', width: '40vw', height: '40vw', background: 'radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, transparent 70%)', filter: 'blur(100px)', pointerEvents: 'none', zIndex: 0 }}></div>
       <div style={{ position: 'absolute', top: '40%', right: '5%', width: '25vw', height: '25vw', background: 'radial-gradient(circle, rgba(124, 114, 255, 0.06) 0%, transparent 70%)', filter: 'blur(60px)', pointerEvents: 'none', zIndex: 0 }}></div>
 
-      {/* Sidebar */}
-      <aside className="glass" style={{
+      {/* Sidebar - Hidden on Mobile */}
+      <aside className="glass mobile-hide" style={{
         width: isCollapsed ? '88px' : '280px', minHeight: '100vh', zIndex: 20,
         display: 'flex', flexDirection: 'column', flexShrink: 0,
         background: 'var(--sidebar-bg)',
@@ -131,7 +131,7 @@ export default function Layout({ children }) {
         flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', position: 'relative', zIndex: 10 
       }}>
         <GlobalHeader showLogout={true} onLogout={handleLogout} />
-        <div style={{ flex: 1, padding: '48px 60px' }}>
+        <div className="mobile-padding" style={{ flex: 1, padding: '48px 60px' }}>
           {children}
         </div>
         <GlobalFooter />

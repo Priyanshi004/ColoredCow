@@ -60,13 +60,44 @@ export default function Reports() {
     }
   }, [data])
 
+  const handleExport = () => {
+    api.get('/api/applications/export', { responseType: 'blob' })
+      .then(res => {
+        const url = window.URL.createObjectURL(new Blob([res.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', `candidates_export_${new Date().toISOString().split('T')[0]}.xlsx`);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        window.URL.revokeObjectURL(url);
+      })
+      .catch(err => {
+        console.error('Export failed:', err);
+        alert('Failed to export data. Please check if you are logged in and have a stable connection.');
+      });
+  };
+
   if (!data) return <div style={{ padding: '60px', textAlign: 'center', color: 'var(--muted)', fontWeight: '600' }}>GENERATING INSIGHTS...</div>
 
   return (
     <div className="animate-fade-in">
-      <div style={{ marginBottom: '48px' }}>
-        <h1 className="text-gradient" style={{ fontSize: '36px', fontWeight: '900', margin: '0 0 12px', letterSpacing: '-1.5px' }}>Hiring Analytics</h1>
-        <p style={{ color: 'var(--muted)', fontSize: '16px' }}>Performance metrics and volume trends across departments.</p>
+      <div className="mobile-stack" style={{ marginBottom: '48px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
+        <div>
+          <h1 className="text-gradient" style={{ fontSize: 'clamp(28px, 6vw, 36px)', fontWeight: '900', margin: '0 0 12px', letterSpacing: '-1.5px' }}>Hiring Analytics</h1>
+          <p style={{ color: 'var(--muted)', fontSize: '16px' }}>Performance metrics and volume trends across departments.</p>
+        </div>
+        <button 
+          onClick={handleExport}
+          className="hover-glow"
+          style={{ 
+            background: 'var(--accent2)', color: 'white', border: 'none', 
+            padding: '12px 24px', borderRadius: '16px', fontWeight: '700', 
+            display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', width: window.innerWidth < 768 ? '100%' : 'auto'
+          }}
+        >
+          <span style={{ fontSize: '18px' }}>󰒑</span> Export to Excel
+        </button>
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px', marginBottom: '48px' }}>
@@ -75,10 +106,10 @@ export default function Reports() {
         <StatCard title="Candidate NPS" value="9.2" subtitle="Experience Score" accent="var(--warn)" />
       </div>
 
-      <div className="glass" style={{ padding: '40px', borderRadius: '32px' }}>
+      <div className="glass" style={{ padding: 'clamp(20px, 5vw, 40px)', borderRadius: '32px' }}>
         <h2 style={{ fontSize: '20px', fontWeight: '800', color: 'white', marginBottom: '40px' }}>Application Volume Trend</h2>
-        <div style={{ background: 'rgba(0,0,0,0.1)', borderRadius: '24px', padding: '20px', overflowX: 'auto' }}>
-          <canvas ref={canvasRef} width="800" height="300" style={{ display: 'block', margin: '0 auto', maxWidth: '100%' }}></canvas>
+        <div className="hide-scrollbar" style={{ background: 'rgba(0,0,0,0.1)', borderRadius: '24px', padding: '20px', overflowX: 'auto' }}>
+          <canvas ref={canvasRef} width="800" height="300" style={{ display: 'block', margin: '0 auto', maxWidth: 'none' }}></canvas>
         </div>
       </div>
     </div>

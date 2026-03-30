@@ -11,6 +11,9 @@ use App\Models\ApplicationAction;
 use App\Mail\ApplicationReceivedMail;
 use App\Mail\ApplicationApprovedMail;
 use App\Mail\ApplicationRejectedMail;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use App\Mail\HRApplicationNotificationMail;
 
 class ApplicationController extends Controller
 {
@@ -88,7 +91,16 @@ class ApplicationController extends Controller
         ]);
 
         $application->load('jobOpening');
-        Mail::to($application->email)->send(new ApplicationReceivedMail($application));
+
+        try {
+            // 1. Send confirmation to candidate (queued)
+            Mail::to($application->email)->queue(new ApplicationReceivedMail($application));
+            
+            // 2. Send notification to HR (queued)
+            Mail::to(config('mail.hr_email'))->queue(new HRApplicationNotificationMail($application));
+        } catch (\Exception $e) {
+            \Log::error("Failed to queue hiring emails: " . $e->getMessage());
+        }
 
         return response()->json(['message' => 'Application submitted successfully'], 201);
     }
@@ -110,6 +122,51 @@ class ApplicationController extends Controller
     {
         $application = Application::with(['jobOpening', 'actions.user'])->findOrFail($id);
         return response()->json($application);
+    }
+
+    public function export()
+    {
+        $applications = Application::with('jobOpening')->get();
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        // Headers
+        $headers = ['Full Name', 'Email', 'Phone', 'City', 'College', 'Graduation Year', 'Job Title', 'Status', 'Applied At'];
+        $column = 'A';
+        foreach ($headers as $header) {
+            $sheet->setCellValue($column . '1', $header);
+            $sheet->getStyle($column . '1')->getFont()->setBold(true);
+            $column++;
+        }
+
+        // Data
+        $row = 2;
+        foreach ($applications as $app) {
+            $sheet->setCellValue('A' . $row, $app->full_name);
+            $sheet->setCellValue('B' . $row, $app->email);
+            $sheet->setCellValue('C' . $row, $app->phone);
+            $sheet->setCellValue('D' . $row, $app->city);
+            $sheet->setCellValue('E' . $row, $app->college);
+            $sheet->setCellValue('F' . $row, $app->graduation_year);
+            $sheet->setCellValue('G' . $row, $app->jobOpening->title ?? 'N/A');
+            $sheet->setCellValue('H' . $row, $app->status);
+            $sheet->setCellValue('I' . $row, $app->created_at->toDateTimeString());
+            $row++;
+        }
+
+        // Auto-size columns
+        foreach (range('A', 'I') as $col) {
+            $sheet->getColumnDimension($col)->setAutoSize(true);
+        }
+
+        $writer = new Xlsx($spreadsheet);
+        
+        return response()->streamDownload(function() use ($writer) {
+            $writer->save('php://output');
+        }, 'candidates_export_' . date('Y-m-d') . '.xlsx', [
+            'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        ]);
     }
 
     public function update(Request $request, $id)

@@ -116,10 +116,10 @@ export default function PublicForm() {
   )
 
   return (
-    <div style={{ padding: '80px 20px', display: 'flex', justifyContent: 'center' }}>
+    <div className="mobile-padding" style={{ padding: '80px 20px', display: 'flex', justifyContent: 'center' }}>
       <div style={{ width: '100%', maxWidth: '640px' }}>
 
-        <div className="glass animate-fade-in" style={{ padding: '48px', borderRadius: '32px' }}>          <div style={{ marginBottom: '40px' }}>
+        <div className="glass animate-fade-in" style={{ padding: 'clamp(24px, 5vw, 48px)', borderRadius: '32px' }}>          <div style={{ marginBottom: '40px' }}>
             <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', marginBottom: '24px' }}>
               {[1, 2, 3, 4].map(s => (
                 <div key={s} style={{ 
@@ -153,7 +153,7 @@ export default function PublicForm() {
                     {jobs.map(job => <option key={job.id} value={job.id} style={{ background: 'var(--bg)' }}>{job.title}</option>)}
                   </select>
                 </div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                <div className="mobile-grid-1" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
                   <div>
                     <Label>Full Name <span style={{ color: 'var(--danger)' }}>*</span></Label>
                     <input style={inputStyle} placeholder="Jane Doe" value={form.full_name} onChange={e => setForm({ ...form, full_name: e.target.value })} required />
@@ -163,7 +163,7 @@ export default function PublicForm() {
                     <input type="email" style={inputStyle} placeholder="jane@example.com" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} required />
                   </div>
                 </div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                <div className="mobile-grid-1" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
                   <div>
                     <Label>Phone Number <span style={{ color: 'var(--danger)' }}>*</span></Label>
                     <input style={inputStyle} placeholder="+91 98765 43210" value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })} required />
@@ -173,7 +173,7 @@ export default function PublicForm() {
                     <input style={inputStyle} placeholder="Mumbai, MH" value={form.city} onChange={e => setForm({ ...form, city: e.target.value })} required />
                   </div>
                 </div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                <div className="mobile-grid-1" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
                   <div>
                     <Label>LinkedIn URL</Label>
                     <input style={inputStyle} placeholder="https://linkedin.com/in/..." value={form.linkedin_url} onChange={e => setForm({ ...form, linkedin_url: e.target.value })} />
@@ -196,7 +196,7 @@ export default function PublicForm() {
                   <Label>College / University <span style={{ color: 'var(--danger)' }}>*</span></Label>
                   <input style={inputStyle} placeholder="IIT Bombay / Delhi University" value={form.college} onChange={e => setForm({ ...form, college: e.target.value })} required />
                 </div>
-                <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '20px' }}>
+                <div className="mobile-grid-1" style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '20px' }}>
                   <div>
                     <Label>Degree / Specification <span style={{ color: 'var(--danger)' }}>*</span></Label>
                     <input style={inputStyle} placeholder="B.Tech Computer Science" value={form.degree} onChange={e => setForm({ ...form, degree: e.target.value })} required />
@@ -215,7 +215,7 @@ export default function PublicForm() {
 
             {step === 3 && (
               <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                <div className="mobile-grid-1" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
                   <div>
                     <Label>Recent Company</Label>
                     <input style={inputStyle} placeholder="Where did you work last?" value={form.company} onChange={e => setForm({ ...form, company: e.target.value })} />
@@ -254,14 +254,14 @@ export default function PublicForm() {
               </div>
             )}
 
-            <div style={{ display: 'flex', gap: '16px', marginTop: '24px' }}>
-              {step > 1 && (
-                <button type="button" onClick={() => setStep(step - 1)} style={{
-                  flex: 1, padding: '16px', borderRadius: '16px',
-                  background: 'var(--surface2)', border: '1px solid var(--border)',
-                  color: 'var(--text)', fontWeight: '700', cursor: 'pointer', transition: 'all 0.3s'
-                }}>PREVIOUS</button>
-              )}
+              <div className="mobile-stack" style={{ display: 'flex', gap: '16px', marginTop: '24px' }}>
+                {step > 1 && (
+                  <button type="button" onClick={() => setStep(step - 1)} style={{
+                    flex: 1, padding: '16px', borderRadius: '16px',
+                    background: 'var(--surface2)', border: '1px solid var(--border)',
+                    color: 'var(--text)', fontWeight: '700', cursor: 'pointer', transition: 'all 0.3s'
+                  }}>PREVIOUS</button>
+                )}
               
               {step < 4 ? (
                 <button type="button" onClick={handleNext} className="hover-glow" style={{

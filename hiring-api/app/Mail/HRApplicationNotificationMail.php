@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class ApplicationReceivedMail extends Mailable
+class HRApplicationNotificationMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -19,14 +19,14 @@ class ApplicationReceivedMail extends Mailable
     {
         return new Envelope(
             from: 'onboarding@resend.dev',
-            subject: 'We received your application!',
+            subject: 'New Application Received: ' . $this->application->full_name,
         );
     }
 
     public function content(): Content
     {
         return new Content(
-            view: 'emails.application-received',
+            view: 'emails.hr-application-notification',
         );
     }
 }

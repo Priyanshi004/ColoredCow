@@ -147,3 +147,21 @@ body {
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .desktop-only { display: none !important; }
+  .mobile-stack { flex-direction: column !important; gap: 16px !important; }
+  .mobile-grid-1 { grid-template-columns: 1fr !important; }
+  .mobile-padding { padding: 40px 16px !important; }
+  .mobile-text-sm { font-size: 14px !important; }
+  .mobile-hide { display: none !important; }
+  
+  h1 { font-size: 32px !important; letter-spacing: -1px !important; }
+  h2 { font-size: 24px !important; }
+  
+  .glass { padding: 24px !important; border-radius: 20px !important; }
+}
+
+.hide-scrollbar::-webkit-scrollbar { display: none; }
+.hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }

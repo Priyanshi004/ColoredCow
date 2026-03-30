@@ -31,25 +31,25 @@ export default function LandingPage() {
             fontSize: '13px', fontWeight: '800', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '32px' 
           }}>Join Our Herd</div>
           
-          <h1 className="text-gradient" style={{ fontSize: '84px', fontWeight: '900', margin: '0 0 24px', letterSpacing: '-4px', lineHeight: 0.9 }}>
+          <h1 className="text-gradient" style={{ fontSize: 'clamp(48px, 12vw, 84px)', fontWeight: '900', margin: '0 0 24px', letterSpacing: '-4px', lineHeight: 0.9 }}>
             ColoredCow
           </h1>
           
-          <p style={{ color: 'var(--muted)', fontSize: '22px', fontWeight: '500', maxWidth: '650px', margin: '0 auto 48px', lineHeight: 1.5 }}>
+          <p style={{ color: 'var(--muted)', fontSize: 'clamp(16px, 4vw, 22px)', fontWeight: '500', maxWidth: '650px', margin: '0 auto 48px', lineHeight: 1.5 }}>
             We're building the future of software, one exceptional talent at a time. 
             Experience a hiring process designed for creators, thinkers, and builders.
           </p>
           
-          <div style={{ display: 'flex', gap: '20px', justifyContent: 'center' }}>
+          <div className="mobile-stack" style={{ display: 'flex', gap: '20px', justifyContent: 'center' }}>
             <button onClick={() => navigate('/select')} className="hover-glow" style={{ 
               background: 'var(--accent)', color: 'white', border: 'none', 
-              padding: '18px 40px', borderRadius: '18px', fontWeight: '800', fontSize: '16px', cursor: 'pointer' 
+              padding: '18px 40px', borderRadius: '18px', fontWeight: '800', fontSize: '16px', cursor: 'pointer', width: window.innerWidth < 768 ? '100%' : 'auto'
             }}>Get Started →</button>
             <button onClick={() => {
               document.getElementById('process').scrollIntoView({ behavior: 'smooth' })
             }} style={{ 
               background: 'transparent', color: 'var(--text)', border: '1px solid var(--border)', 
-              padding: '18px 40px', borderRadius: '18px', fontWeight: '800', fontSize: '16px', cursor: 'pointer' 
+              padding: '18px 40px', borderRadius: '18px', fontWeight: '800', fontSize: '16px', cursor: 'pointer', width: window.innerWidth < 768 ? '100%' : 'auto'
             }}>Learn More</button>
           </div>
         </div>
@@ -63,12 +63,12 @@ export default function LandingPage() {
             <p style={{ color: 'var(--muted)', fontSize: '18px', maxWidth: '600px', margin: '0 auto' }}>Transparent, human-centric, and efficient. Here's how we find our next teammates.</p>
           </div>
 
-          <div style={{ 
+          <div className="mobile-grid-1" style={{ 
             display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', 
             gap: '32px', position: 'relative' 
           }}>
             {/* Connecting line (hidden on mobile) */}
-            <div style={{ 
+            <div className="mobile-hide" style={{ 
               position: 'absolute', top: '40px', left: '100px', right: '100px', height: '2px', 
               background: 'linear-gradient(90deg, var(--accent) 0%, var(--accent2) 100%)', opacity: 0.1, zIndex: 0 
             }}></div>

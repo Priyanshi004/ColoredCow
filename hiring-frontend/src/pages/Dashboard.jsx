@@ -32,14 +32,14 @@ export default function Dashboard() {
 
   return (
     <div className="animate-fade-in">
-      <div style={{ marginBottom: '48px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
+      <div className="mobile-stack" style={{ marginBottom: '48px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
         <div>
-          <h1 className="text-gradient" style={{ fontSize: '40px', fontWeight: '900', margin: '0 0 12px', letterSpacing: '-1.5px' }}>
+          <h1 className="text-gradient" style={{ fontSize: 'clamp(28px, 6vw, 40px)', fontWeight: '900', margin: '0 0 12px', letterSpacing: '-1.5px' }}>
             Welcome back, admin
           </h1>
           <p style={{ color: 'var(--muted)', fontSize: '16px', margin: 0, fontWeight: '500' }}>Here is what's happening in your hiring pipeline today.</p>
         </div>
-        <div className="glass" style={{ padding: '12px 24px', borderRadius: '16px', display: 'flex', alignItems: 'center', gap: '12px', background: 'var(--surface)' }}>
+        <div className="glass mobile-hide" style={{ padding: '12px 24px', borderRadius: '16px', display: 'flex', alignItems: 'center', gap: '12px', background: 'var(--surface)' }}>
           <span style={{ fontSize: '20px' }}>󰃭</span>
           <span style={{ fontSize: '14px', fontWeight: '700', color: 'var(--text)' }}>{new Date().toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' })}</span>
         </div>
@@ -55,7 +55,7 @@ export default function Dashboard() {
  
       {/* Recent applications */}
       <div className="glass" style={{ borderRadius: '32px', overflow: 'hidden', padding: '8px', background: 'var(--surface)' }}>
-        <div style={{ padding: '32px 40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div className="mobile-stack" style={{ padding: '32px 40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div>
             <h2 style={{ fontSize: '20px', fontWeight: '800', color: 'var(--text)', margin: '0 0 4px' }}>Recent Candidates</h2>
             <p style={{ fontSize: '13px', color: 'var(--muted)', margin: 0 }}>Latest submissions from the last 24 hours</p>
@@ -63,12 +63,12 @@ export default function Dashboard() {
           <button onClick={() => navigate('/applications')} className="hover-glow" style={{
             background: 'var(--surface2)', border: '1px solid var(--border)', color: 'var(--text)',
             padding: '12px 24px', borderRadius: '14px', cursor: 'pointer', fontSize: '14px', fontWeight: '700',
-            transition: 'all 0.3s',
+            transition: 'all 0.3s', width: window.innerWidth < 768 ? '100%' : 'auto'
           }}>Deep tracking →</button>
         </div>
         
-        <div style={{ overflowX: 'auto' }}>
-          <table style={{ width: '100%', borderCollapse: 'separate', borderSpacing: '0 4px' }}>
+        <div className="hide-scrollbar" style={{ overflowX: 'auto' }}>
+          <table style={{ width: '100%', minWidth: '900px', borderCollapse: 'separate', borderSpacing: '0 4px' }}>
             <thead>
               <tr style={{ background: 'var(--surface2)' }}>
                 {['Candidate', 'Applied For', 'City', 'Status', 'Applied Date'].map(h => (
